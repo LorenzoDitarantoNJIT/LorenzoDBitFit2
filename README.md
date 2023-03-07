@@ -35,6 +35,7 @@ GIF created with ...
 [Kap](https://getkap.co/) for macOS
 [ScreenToGif](https://www.screentogif.com/) for Windows
 [peek](https://github.com/phw/peek) for Linux. -->
+![bitfit2](https://user-images.githubusercontent.com/122946486/223324334-4ed25dc8-5feb-4c38-b791-369b1556712a.gif)
 
 ## Notes
 
