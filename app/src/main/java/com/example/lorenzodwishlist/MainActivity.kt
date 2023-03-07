@@ -1,35 +1,53 @@
 package com.example.lorenzodwishlist
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import org.json.JSONException
+
+
+
+private const val TAG = "MainActivity/"
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.fragment_item)
 
-        val showButton = findViewById<Button>(R.id.button)
-        val priceVal = findViewById<TextView>(R.id.price)
-        val itemName = findViewById<TextView>(R.id.itemname)
-        val itemURL = findViewById<TextView>(R.id.url)
-        val emailsRv = findViewById<RecyclerView>(R.id.emailsRv)
+        val fragmentManager: FragmentManager = supportFragmentManager
 
-        var itemsList : MutableList<Item> = ArrayList()
+        // define your fragments here
+        val bestSellerBooksFragment: Fragment = ItemFragment()
+        val articleListFragment: Fragment = statsFragment()
 
-        showButton.setOnClickListener {
+        val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation)
 
-            val currentItem = Item(itemName.getText().toString(), priceVal.getText().toString(), itemURL.getText().toString())
-            itemsList.add(currentItem)
-            val adapter = ItemAdapter(itemsList)
-            emailsRv.adapter = adapter
-
-            emailsRv.layoutManager = LinearLayoutManager(this)
+        // handle navigation selection
+        bottomNavigationView.setOnItemSelectedListener { item ->
+            lateinit var fragment: Fragment
+            when (item.itemId) {
+                R.id.action_book -> fragment = bestSellerBooksFragment
+                R.id.action_article -> fragment = articleListFragment
+            }
+            replaceFragment(fragment)
+            true
         }
 
+        // Set default selection
+        bottomNavigationView.selectedItemId = R.id.action_book
+    }
 
+    private fun replaceFragment(articleListFragment: Fragment) {
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.article_frame_layout, articleListFragment)
+        fragmentTransaction.commit()
     }
 }

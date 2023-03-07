@@ -1,4 +1,4 @@
 package com.example.lorenzodwishlist
 
-class ItemFetcher {
+class DataEntities {
 }
